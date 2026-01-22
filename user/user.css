@@ -3,6 +3,10 @@ body {
     padding: 20px;
 }
 
+h2 {
+    margin-bottom: 15px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -12,13 +16,28 @@ table {
 th, td {
     border: 1px solid #ccc;
     padding: 8px;
+    text-align: left;
 }
 
 th {
-    background: #f4f4f4;
+    background-color: #f4f4f4;
 }
 
 button {
     margin-right: 5px;
     padding: 6px 10px;
+    cursor: pointer;
+}
+
+#addBtn {
+    margin-top: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+}
+
+#logoutBtn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
 }
