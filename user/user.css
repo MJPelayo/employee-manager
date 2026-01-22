@@ -3,10 +3,22 @@ body {
     padding: 20px;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+th {
+    background: #f4f4f4;
+}
+
 button {
-    padding: 10px;
-    background: #dc3545;
-    color: white;
-    border: none;
-    cursor: pointer;
+    margin-right: 5px;
+    padding: 6px 10px;
 }
