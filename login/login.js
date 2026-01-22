@@ -1,24 +1,25 @@
-const loginForm = document.getElementById("loginForm");
-const errorMessage = document.getElementById("errorMessage");
+const form = document.getElementById("loginForm");
+const error = document.getElementById("error");
+const password = document.getElementById("password");
+const showPassword = document.getElementById("showPassword");
 
-loginForm.addEventListener("submit", function (event) {
-    event.preventDefault(); // Stop form from refreshing page
+// Show / Hide Password
+showPassword.addEventListener("change", () => {
+    password.type = showPassword.checked ? "text" : "password";
+});
+
+// Login logic
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
     const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
+    const pwd = password.value.trim();
 
-    // Validation
-    if (username === "" || password === "") {
-        errorMessage.textContent = "Please enter both username and password.";
+    if (username === "" || pwd === "") {
+        error.textContent = "All fields are required.";
         return;
     }
 
-    // Clear error if valid
-    errorMessage.textContent = "";
-
-    // Temporary success behavior
-    alert("Login successful!");
-
-    // Later you can redirect:
-    // window.location.href = "../user/index.html";
+    localStorage.setItem("loggedIn", "true");
+    window.location.href = "../user/index.html";
 });
