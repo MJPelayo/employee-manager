@@ -1,50 +1,102 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add / Edit Employee</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee System | Employee Form</title>
     <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Employee Form</h2>
+    <div class="form-container">
+        <!-- Form Header -->
+        <div class="form-header">
+            <h2>
+                <i class="fas fa-user-edit"></i>
+                Employee Form
+            </h2>
+            <p>Add or edit employee information</p>
+        </div>
         
-        <form id="employeeForm">
-            <div class="form-group">
-                <label for="employeeId">Employee ID *</label>
-                <input type="text" id="employeeId" placeholder="Enter employee ID" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="firstName">First Name *</label>
-                <input type="text" id="firstName" placeholder="Enter first name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="lastName">Last Name *</label>
-                <input type="text" id="lastName" placeholder="Enter last name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="department">Department *</label>
-                <select id="department" required>
-                    <option value="">Select Department</option>
-                    <option value="HR">Human Resources</option>
-                    <option value="IT">Information Technology</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="Operations">Operations</option>
-                    <option value="Sales">Sales</option>
-                </select>
-            </div>
-            
-            <p id="error" class="error-message"></p>
-            
-            <div class="button-group">
-                <button type="button" id="saveBtn" class="btn btn-primary">Save Employee</button>
-                <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
-            </div>
-        </form>
+        <!-- Form Body -->
+        <div class="form-body">
+            <form id="employeeForm">
+                <div class="form-group">
+                    <label for="employeeId">
+                        <i class="fas fa-id-card"></i> Employee ID *
+                    </label>
+                    <input 
+                        type="text" 
+                        id="employeeId" 
+                        placeholder="Enter employee ID (e.g., EMP001)" 
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="firstName">
+                        <i class="fas fa-user"></i> First Name *
+                    </label>
+                    <input 
+                        type="text" 
+                        id="firstName" 
+                        placeholder="Enter first name" 
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">
+                        <i class="fas fa-user"></i> Last Name *
+                    </label>
+                    <input 
+                        type="text" 
+                        id="lastName" 
+                        placeholder="Enter last name" 
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="department">
+                        <i class="fas fa-building"></i> Department *
+                    </label>
+                    <select id="department" required>
+                        <option value="">Select Department</option>
+                        <option value="HR">Human Resources</option>
+                        <option value="IT">Information Technology</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Sales">Sales</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="employeeType">
+                        <i class="fas fa-user-tag"></i> Employee Type *
+                    </label>
+                    <select id="employeeType" required>
+                        <option value="">Select Type</option>
+                        <option value="full-time">Full-time</option>
+                        <option value="part-time">Part-time</option>
+                        <option value="intern">Intern</option>
+                    </select>
+                </div>
+                
+                <p id="error" class="error-message"></p>
+                
+                <div class="button-group">
+                    <button type="button" id="saveBtn" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Employee
+                    </button>
+                    <button type="button" id="cancelBtn" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="form.js"></script>
