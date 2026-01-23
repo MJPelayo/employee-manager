@@ -6,16 +6,39 @@
     <link rel="stylesheet" href="details.css">
 </head>
 <body>
+    <div class="container">
+        <h2>Employee Details</h2>
+        
+        <div class="details-card">
+            <div class="detail-item">
+                <span class="label">Employee ID:</span>
+                <span id="employeeId" class="value"></span>
+            </div>
+            <div class="detail-item">
+                <span class="label">First Name:</span>
+                <span id="firstName" class="value"></span>
+            </div>
+            <div class="detail-item">
+                <span class="label">Last Name:</span>
+                <span id="lastName" class="value"></span>
+            </div>
+            <div class="detail-item">
+                <span class="label">Department:</span>
+                <span id="department" class="value"></span>
+            </div>
+            <div class="detail-item">
+                <span class="label">Full Name:</span>
+                <span id="fullName" class="value"></span>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button id="editBtn" class="btn btn-primary">Edit Employee</button>
+            <button id="deleteBtn" class="btn btn-danger">Delete Employee</button>
+            <button id="backBtn" class="btn btn-secondary">Back to List</button>
+        </div>
+    </div>
 
-<h2>Employee Details</h2>
-
-<p><strong>Name:</strong> <span id="name"></span></p>
-<p><strong>Department:</strong> <span id="department"></span></p>
-
-<button id="editBtn">Edit</button>
-<button id="deleteBtn">Delete</button>
-<button id="exitBtn">Exit</button>
-
-<script src="details.js"></script>
+    <script src="details.js"></script>
 </body>
 </html>
