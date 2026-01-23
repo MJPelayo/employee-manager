@@ -2,34 +2,97 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Management System</title>
     <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="header">
-        <h2>Employee Management System</h2>
-        <div class="user-info">
-            <span class="username">Welcome, <span id="username"></span></span>
-            <button id="logoutBtn" class="btn btn-danger">Logout</button>
+    <div class="container">
+        <!-- Top Header with Logo -->
+        <div class="top-header">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="logo-text">
+                    <h2>Employee System</h2>
+                    <p class="tagline">Access, Engage, Empower</p>
+                </div>
+            </div>
+            <div class="user-welcome">
+                <span>Welcome, <span id="username">User</span></span>
+            </div>
         </div>
-    </div>
 
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Employee ID</th>
-                    <th>Name</th>
-                    <th>Department</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="employeeTable"></tbody>
-        </table>
-    </div>
+        <!-- Page Title and Stats -->
+        <div class="page-header">
+            <div class="page-title">
+                <h1># Employees</h1>
+                <p>Manage your workforce efficiently</p>
+            </div>
+            <div class="top-stats">
+                <div class="stat-badge">
+                    <i class="fas fa-user-check"></i>
+                    <span id="totalEmployees">0</span>
+                </div>
+                <button id="addBtn" class="btn-add">
+                    <i class="fas fa-plus"></i> Add Employee
+                </button>
+            </div>
+        </div>
 
-    <div style="margin-top: 20px;">
-        <button id="addBtn" class="btn btn-success">Add Employee</button>
+        <!-- Search Bar -->
+        <div class="search-section">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search employees...">
+            </div>
+        </div>
+
+        <!-- Employee Stats Cards -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number" id="fullTimeCount">0</div>
+                <div class="stat-label">Full-time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="partTimeCount">0</div>
+                <div class="stat-label">Part-time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="internCount">0</div>
+                <div class="stat-label">Interns</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="deptCount">1</div>
+                <div class="stat-label">Departments</div>
+            </div>
+        </div>
+
+        <!-- Employee Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Employee ID</th>
+                        <th>Full Name</th>
+                        <th>Department</th>
+                        <th>Employee Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="footer">
+            <button id="logoutBtn" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
     </div>
 
     <script src="user.js"></script>
