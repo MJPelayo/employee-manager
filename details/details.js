@@ -7,7 +7,7 @@ const employees = JSON.parse(localStorage.getItem("employees")) || [];
 const index = localStorage.getItem("viewIndex");
 
 if (index === null || !employees[index]) {
-    window.location.href = "user.html";
+    window.location.href = "../user/index.html";
 }
 
 // Get employee data
@@ -23,7 +23,7 @@ document.getElementById("fullName").textContent = `${employee.firstName} ${emplo
 // Edit button
 document.getElementById("editBtn").addEventListener("click", () => {
     localStorage.setItem("editIndex", index);
-    window.location.href = "form.html";
+    window.location.href = "../form/index.html";
 });
 
 // Delete button
@@ -32,12 +32,12 @@ document.getElementById("deleteBtn").addEventListener("click", () => {
         employees.splice(index, 1);
         localStorage.setItem("employees", JSON.stringify(employees));
         localStorage.removeItem("viewIndex");
-        window.location.href = "user.html";
+        window.location.href = "../user/index.html";
     }
 });
 
 // Back button
 document.getElementById("backBtn").addEventListener("click", () => {
     localStorage.removeItem("viewIndex");
-    window.location.href = "user.html";
+    window.location.href = "../user/index.html";
 });

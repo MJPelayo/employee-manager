@@ -54,13 +54,13 @@ renderTable();
 // Add new employee
 addBtn.addEventListener("click", () => {
     localStorage.removeItem("editIndex");
-    window.location.href = "form/index.html";
+    window.location.href = "../form/index.html";
 });
 
 // Edit existing employee
 window.editEmployee = (index) => {
     localStorage.setItem("editIndex", index);
-    window.location.href = "form/index.html";
+    window.location.href = "../form/index.html";
 };
 
 // Delete employee
@@ -75,7 +75,7 @@ window.deleteEmployee = (index) => {
 // View details
 window.viewEmployee = (index) => {
     localStorage.setItem("viewIndex", index);
-    window.location.href = "details.html";
+    window.location.href = "../details/index.html";
 };
 
 // Logout
