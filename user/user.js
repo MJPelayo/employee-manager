@@ -1,4 +1,3 @@
-
 // Protect page: redirect if not logged in
 if (localStorage.getItem("loggedIn") !== "true") {
     window.location.href = "../login/index.html";
@@ -19,7 +18,9 @@ const deptCount = document.getElementById("deptCount");
 // Set username
 const userEmail = localStorage.getItem("userEmail");
 if (usernameElement) {
-    usernameElement.textContent = userEmail ? userEmail.split('@')[0] : "User";
+    // Extract just the name part before @ for display
+    const displayName = userEmail ? userEmail.split('@')[0] : "Admin";
+    usernameElement.textContent = displayName.charAt(0).toUpperCase() + displayName.slice(1);
 }
 
 // Load employees from localStorage
