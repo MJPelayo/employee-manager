@@ -2,27 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Panel</title>
+    <title>Employee Management System</title>
     <link rel="stylesheet" href="user.css">
 </head>
 <body>
+    <div class="header">
+        <h2>Employee Management System</h2>
+        <div class="user-info">
+            <span class="username">Welcome, <span id="username"></span></span>
+            <button id="logoutBtn" class="btn btn-danger">Logout</button>
+        </div>
+    </div>
 
-<h2>Employee List</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="employeeTable"></tbody>
+        </table>
+    </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Department</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody id="employeeTable"></tbody>
-</table>
+    <div style="margin-top: 20px;">
+        <button id="addBtn" class="btn btn-success">Add Employee</button>
+    </div>
 
-<button id="addBtn">Add Employee</button>
-<button id="logoutBtn">Logout</button>
-
-<script src="user.js"></script>
+    <script src="user.js"></script>
 </body>
 </html>
