@@ -9,16 +9,20 @@ const addBtn = document.getElementById("addBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 const usernameElement = document.getElementById("username");
 const searchInput = document.getElementById("searchInput");
+const departmentFilter = document.getElementById("departmentFilter");
+const typeFilter = document.getElementById("typeFilter");
+const clearFiltersBtn = document.getElementById("clearFilters");
 const totalEmployees = document.getElementById("totalEmployees");
 const fullTimeCount = document.getElementById("fullTimeCount");
 const partTimeCount = document.getElementById("partTimeCount");
 const internCount = document.getElementById("internCount");
 const deptCount = document.getElementById("deptCount");
+const showingCount = document.getElementById("showingCount");
+const totalCount = document.getElementById("totalCount");
 
 // Set username
 const userEmail = localStorage.getItem("userEmail");
 if (usernameElement) {
-    // Extract just the name part before @ for display
     const displayName = userEmail ? userEmail.split('@')[0] : "Admin";
     usernameElement.textContent = displayName.charAt(0).toUpperCase() + displayName.slice(1);
 }
@@ -39,27 +43,64 @@ function updateStatistics() {
     if (partTimeCount) partTimeCount.textContent = partTime;
     if (internCount) internCount.textContent = interns;
     if (deptCount) deptCount.textContent = departments;
+    if (totalCount) totalCount.textContent = total;
+}
+
+// Filter employees based on search and filters
+function filterEmployees() {
+    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const selectedDept = departmentFilter ? departmentFilter.value : '';
+    const selectedType = typeFilter ? typeFilter.value : '';
+    
+    let filtered = employees;
+    
+    // Apply search filter
+    if (searchTerm) {
+        filtered = filtered.filter(emp => 
+            emp.employeeId.toLowerCase().includes(searchTerm) ||
+            emp.firstName.toLowerCase().includes(searchTerm) ||
+            emp.lastName.toLowerCase().includes(searchTerm) ||
+            emp.department.toLowerCase().includes(searchTerm) ||
+            (emp.employeeType && emp.employeeType.toLowerCase().includes(searchTerm))
+        );
+    }
+    
+    // Apply department filter
+    if (selectedDept) {
+        filtered = filtered.filter(emp => emp.department === selectedDept);
+    }
+    
+    // Apply employee type filter
+    if (selectedType) {
+        filtered = filtered.filter(emp => emp.employeeType === selectedType);
+    }
+    
+    return filtered;
 }
 
 // Function to render table
-function renderTable(filteredEmployees = null) {
-    const displayEmployees = filteredEmployees || employees;
+function renderTable() {
+    const filteredEmployees = filterEmployees();
+    
+    if (showingCount) showingCount.textContent = filteredEmployees.length;
+    if (totalCount) totalCount.textContent = employees.length;
+    
     table.innerHTML = "";
     
-    if (displayEmployees.length === 0) {
+    if (filteredEmployees.length === 0) {
         table.innerHTML = `
             <tr>
                 <td colspan="6" class="empty-state">
                     <i class="fas fa-users"></i>
                     <p>No employees found</p>
-                    <p>Click "Add Employee" to add your first employee</p>
+                    <p>Try adjusting your search or filters</p>
                 </td>
             </tr>
         `;
         return;
     }
     
-    displayEmployees.forEach((emp, index) => {
+    filteredEmployees.forEach((emp, index) => {
         // Determine employee type badge class
         let typeClass = 'full-time';
         let typeText = 'Full-time';
@@ -72,6 +113,8 @@ function renderTable(filteredEmployees = null) {
             typeText = 'Intern';
         }
         
+        const originalIndex = employees.indexOf(emp);
+        
         table.innerHTML += `
             <tr>
                 <td>${index + 1}</td>
@@ -81,13 +124,13 @@ function renderTable(filteredEmployees = null) {
                 <td><span class="employee-type ${typeClass}">${typeText}</span></td>
                 <td>
                     <div class="actions">
-                        <button onclick="viewEmployee(${employees.indexOf(emp)})" class="action-btn view" title="View">
+                        <button onclick="viewEmployee(${originalIndex})" class="action-btn view" title="View">
                             <i class="fas fa-eye"></i>
                         </button>
-                        <button onclick="editEmployee(${employees.indexOf(emp)})" class="action-btn edit" title="Edit">
+                        <button onclick="editEmployee(${originalIndex})" class="action-btn edit" title="Edit">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button onclick="deleteEmployee(${employees.indexOf(emp)})" class="action-btn delete" title="Delete">
+                        <button onclick="deleteEmployee(${originalIndex})" class="action-btn delete" title="Delete">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -101,25 +144,26 @@ function renderTable(filteredEmployees = null) {
 renderTable();
 updateStatistics();
 
-// Search functionality
+// Event listeners for filtering
 if (searchInput) {
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase().trim();
-        
-        if (searchTerm === '') {
-            renderTable();
-            return;
-        }
-        
-        const filtered = employees.filter(emp => 
-            emp.employeeId.toLowerCase().includes(searchTerm) ||
-            emp.firstName.toLowerCase().includes(searchTerm) ||
-            emp.lastName.toLowerCase().includes(searchTerm) ||
-            emp.department.toLowerCase().includes(searchTerm) ||
-            (emp.employeeType && emp.employeeType.toLowerCase().includes(searchTerm))
-        );
-        
-        renderTable(filtered);
+    searchInput.addEventListener('input', renderTable);
+}
+
+if (departmentFilter) {
+    departmentFilter.addEventListener('change', renderTable);
+}
+
+if (typeFilter) {
+    typeFilter.addEventListener('change', renderTable);
+}
+
+// Clear all filters
+if (clearFiltersBtn) {
+    clearFiltersBtn.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        if (departmentFilter) departmentFilter.value = '';
+        if (typeFilter) typeFilter.value = '';
+        renderTable();
     });
 }
 
