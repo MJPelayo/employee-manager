@@ -54,13 +54,13 @@ renderTable();
 // Add new employee
 addBtn.addEventListener("click", () => {
     localStorage.removeItem("editIndex");
-    window.location.href = "form.html";
+    window.location.href = "form/index.html";
 });
 
 // Edit existing employee
 window.editEmployee = (index) => {
     localStorage.setItem("editIndex", index);
-    window.location.href = "form.html";
+    window.location.href = "form/index.html";
 };
 
 // Delete employee
