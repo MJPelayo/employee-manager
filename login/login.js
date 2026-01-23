@@ -8,7 +8,7 @@ showPassword.addEventListener("change", () => {
     password.type = showPassword.checked ? "text" : "password";
 });
 
-// Login logic
+// Simple login validation
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -20,6 +20,22 @@ form.addEventListener("submit", (e) => {
         return;
     }
 
-    localStorage.setItem("loggedIn", "true");
-    window.location.href = "../user/index.html";
+    // Basic validation (in real app, this would be server-side)
+    if (username === "admin" && pwd === "admin123") {
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("username", username);
+        error.textContent = "";
+        window.location.href = "../user/index.html";
+    } else {
+        error.textContent = "Invalid username or password.";
+    }
+});
+
+// Clear error when user starts typing
+document.getElementById("username").addEventListener("input", () => {
+    error.textContent = "";
+});
+
+password.addEventListener("input", () => {
+    error.textContent = "";
 });
