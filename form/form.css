@@ -21,7 +21,7 @@ body {
 .form-container {
     background: white;
     width: 100%;
-    max-width: 500px;
+    max-width: 900px;
     border-radius: 20px;
     box-shadow: 0 15px 50px rgba(42, 53, 166, 0.3);
     overflow: hidden;
@@ -33,6 +33,7 @@ body {
     color: white;
     padding: 30px;
     text-align: center;
+    position: relative;
 }
 
 .form-header h2 {
@@ -56,39 +57,309 @@ body {
     font-weight: 300;
 }
 
+.back-btn {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 18px;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
 /* Form Body */
 .form-body {
     padding: 40px;
     background: #f8f9fa;
 }
 
-/* Form Groups */
-.form-group {
-    margin-bottom: 25px;
+/* Two Column Layout */
+.two-column-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 40px;
 }
 
-.form-group label {
+/* Left Column - Profile & ID */
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Profile Card */
+.profile-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(57, 73, 171, 0.1);
+    padding: 30px;
+    text-align: center;
+}
+
+.profile-card h3 {
+    color: #3949ab;
+    font-size: 20px;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(57, 73, 171, 0.2);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.profile-card h3 i {
+    color: #761546;
+}
+
+/* Profile Picture */
+.profile-picture-container {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 25px;
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-picture-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid #e0e0e0;
+    overflow: hidden;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.profile-picture-container:hover .profile-picture-wrapper {
+    border-color: #3949ab;
+    transform: scale(1.02);
+}
+
+.profile-picture-icon {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #3d48ad 0%, #761546 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 60px;
+}
+
+.profile-picture-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+.profile-picture-container.has-image .profile-picture-icon {
+    display: none;
+}
+
+.profile-picture-container.has-image .profile-picture-preview {
+    display: block;
+}
+
+.profile-picture-upload {
+    display: none;
+}
+
+.upload-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(57, 73, 171, 0.9);
+    color: white;
+    padding: 8px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.profile-picture-container:hover .upload-overlay {
+    opacity: 1;
+}
+
+.profile-picture-text {
+    color: #666;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.profile-picture-text small {
+    color: #999;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Employee ID Card */
+.id-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(57, 73, 171, 0.1);
+    padding: 30px;
+}
+
+.id-card h3 {
+    color: #3949ab;
+    font-size: 20px;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(57, 73, 171, 0.2);
+    font-weight: 600;
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.id-card h3 i {
+    color: #761546;
+}
+
+/* Employee ID Input */
+.employee-id-input {
+    position: relative;
+}
+
+.employee-id-input label {
+    display: block;
     font-size: 14px;
     color: #555;
     margin-bottom: 8px;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.employee-id-input label i {
+    color: #3949ab;
+    font-size: 16px;
+}
+
+.employee-id-input input {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    background: white;
+    color: #333;
+}
+
+.employee-id-input input:focus {
+    outline: none;
+    border-color: #3949ab;
+    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.1);
+}
+
+.employee-id-input input:disabled {
+    background: #f8f9fa;
+    color: #666;
+    border-color: #dee2e6;
+}
+
+.id-hint {
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 10px;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Right Column - Form Fields */
+.right-column {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(57, 73, 171, 0.1);
+    padding: 30px;
+}
+
+.right-column h3 {
+    color: #3949ab;
+    font-size: 20px;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(57, 73, 171, 0.2);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.right-column h3 i {
+    color: #761546;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .form-group label i {
     color: #3949ab;
     font-size: 16px;
+    min-width: 20px;
+}
+
+.required::after {
+    content: " *";
+    color: #dc3545;
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
-    padding: 15px;
+    padding: 12px 15px;
     border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 16px;
+    border-radius: 8px;
+    font-size: 15px;
     transition: all 0.3s;
     background: white;
     color: #333;
@@ -111,7 +382,7 @@ body {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%233949ab' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 15px center;
-    background-size: 16px;
+    background-size: 14px;
     padding-right: 45px;
 }
 
@@ -121,16 +392,25 @@ body {
     font-size: 14px;
     text-align: center;
     min-height: 20px;
-    margin: 15px 0;
-    padding: 10px;
+    margin: 20px 0;
+    padding: 12px;
     background: rgba(220, 53, 69, 0.1);
     border-radius: 8px;
     border: 1px solid rgba(220, 53, 69, 0.2);
     display: none;
+    grid-column: 1 / -1;
 }
 
 .error-message:not(:empty) {
     display: block;
+}
+
+/* Divider */
+.divider {
+    grid-column: 1 / -1;
+    height: 1px;
+    background: rgba(57, 73, 171, 0.2);
+    margin: 10px 0;
 }
 
 /* Button Group */
@@ -138,11 +418,12 @@ body {
     display: flex;
     gap: 15px;
     margin-top: 30px;
+    grid-column: 1 / -1;
+    justify-content: flex-end;
 }
 
 .btn {
-    flex: 1;
-    padding: 16px;
+    padding: 14px 28px;
     border: none;
     border-radius: 10px;
     font-size: 16px;
@@ -153,6 +434,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    min-width: 160px;
 }
 
 .btn-primary {
@@ -195,14 +477,40 @@ body {
     
     .form-header h2 {
         font-size: 28px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+    
+    .back-btn {
+        left: 20px;
+        width: 35px;
+        height: 35px;
     }
     
     .form-body {
         padding: 30px 25px;
     }
     
+    .two-column-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .profile-card, .id-card {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
     .button-group {
         flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
     }
 }
 
@@ -213,6 +521,8 @@ body {
     
     .form-header h2 {
         font-size: 24px;
+        margin-left: 35px;
+        margin-right: 35px;
     }
     
     .form-header p {
@@ -223,14 +533,29 @@ body {
         padding: 25px 20px;
     }
     
+    .profile-picture-container {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .profile-picture-icon {
+        font-size: 50px;
+    }
+    
     .form-group input,
     .form-group select {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+    
+    .employee-id-input input {
         padding: 12px;
         font-size: 15px;
     }
     
     .btn {
-        padding: 14px;
+        padding: 12px 20px;
         font-size: 15px;
+        min-width: auto;
     }
 }
