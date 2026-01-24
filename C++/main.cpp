@@ -3,9 +3,8 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include <memory>  // For smart pointers
+#include <memory>
 #include <iomanip>
-#include <cctype>  // For toupper
 
 using namespace std;
 
@@ -18,12 +17,10 @@ void updateEmployee(vector<shared_ptr<Employee>>& employees);
 void deleteEmployee(vector<shared_ptr<Employee>>& employees);
 void sortEmployees(vector<shared_ptr<Employee>>& employees);
 void filterEmployees(const vector<shared_ptr<Employee>>& employees);
-void generateReport(const vector<shared_ptr<Employee>>& employees);
 
 // Helper functions for sorting
 bool compareById(const shared_ptr<Employee>& a, const shared_ptr<Employee>& b);
 bool compareByName(const shared_ptr<Employee>& a, const shared_ptr<Employee>& b);
-bool compareBySalary(const shared_ptr<Employee>& a, const shared_ptr<Employee>& b);
 bool compareByDepartment(const shared_ptr<Employee>& a, const shared_ptr<Employee>& b);
 bool compareByType(const shared_ptr<Employee>& a, const shared_ptr<Employee>& b);
 
@@ -31,39 +28,30 @@ int main() {
     vector<shared_ptr<Employee>> employees;
     int choice;
     
-    cout << "========================================\n";
-    cout << "   ADVANCED EMPLOYEE MANAGEMENT SYSTEM   \n";
-    cout << "========================================\n";
+    cout << "================================\n";
+    cout << "   EMPLOYEE MANAGEMENT SYSTEM   \n";
+    cout << "================================\n";
     
-    // Create sample employees using inheritance
+    // Create sample employees matching your form
     employees.push_back(make_shared<FullTimeEmployee>("EMP001", "John", "Doe", 
-                                                      "john@company.com", "123-456-7890", 
-                                                      "Male", "IT", 60000.0, 5000.0, 20));
+                                                      "john@employee.com", "(123) 456-7890", 
+                                                      "Male", "IT"));
     
     employees.push_back(make_shared<PartTimeEmployee>("EMP002", "Jane", "Smith", 
-                                                      "jane@company.com", "234-567-8901", 
-                                                      "Female", "Marketing", 30.0, 25));
+                                                      "jane@employee.com", "(234) 567-8901", 
+                                                      "Female", "HR"));
     
-    employees.push_back(make_shared<Intern>("EMP003", "Bob", "Johnson", 
-                                            "bob@company.com", "345-678-9012", 
-                                            "Male", "Engineering", 
-                                            "Tech University", "Computer Science", 6));
-    
-    employees.push_back(make_shared<FullTimeEmployee>("EMP004", "Alice", "Williams", 
-                                                      "alice@company.com", "456-789-0123", 
-                                                      "Female", "HR", 55000.0, 4000.0, 18));
-    
-    employees.push_back(make_shared<PartTimeEmployee>("EMP005", "Charlie", "Brown", 
-                                                      "charlie@company.com", "567-890-1234", 
-                                                      "Male", "Finance", 35.0, 15));
+    employees.push_back(make_shared<InternEmployee>("EMP003", "Bob", "Johnson", 
+                                                    "bob@employee.com", "(345) 678-9012", 
+                                                    "Male", "IT"));
     
     cout << "Sample employees added to system.\n";
     
     do {
         displayMenu();
-        cout << "Enter your choice (1-9): ";
+        cout << "Enter your choice (1-8): ";
         cin >> choice;
-        cin.ignore(); // Clear input buffer
+        cin.ignore();
         
         switch(choice) {
             case 1:
@@ -88,10 +76,7 @@ int main() {
                 filterEmployees(employees);
                 break;
             case 8:
-                generateReport(employees);
-                break;
-            case 9:
-                cout << "\nThank you for using the Advanced Employee Management System!\n";
+                cout << "\nThank you for using the Employee Management System!\n";
                 break;
             default:
                 cout << "Invalid choice! Please try again.\n";
@@ -100,12 +85,11 @@ int main() {
         cout << "\nPress Enter to continue...";
         cin.get();
         
-    } while (choice != 9);
+    } while (choice != 8);
     
     return 0;
 }
 
-// Display main menu
 void displayMenu() {
     cout << "\n============== MAIN MENU ==============\n";
     cout << "1. Add New Employee\n";
@@ -115,12 +99,10 @@ void displayMenu() {
     cout << "5. Delete Employee\n";
     cout << "6. Sort Employees\n";
     cout << "7. Filter Employees\n";
-    cout << "8. Generate Report\n";
-    cout << "9. Exit\n";
+    cout << "8. Exit\n";
     cout << "=======================================\n";
 }
 
-// Add a new employee with type selection
 void addEmployee(vector<shared_ptr<Employee>>& employees) {
     int empType;
     string id, fname, lname, email, phone, gender, dept;
@@ -146,64 +128,54 @@ void addEmployee(vector<shared_ptr<Employee>>& employees) {
     cout << "Enter Email: ";
     getline(cin, email);
     
-    cout << "Enter Phone: ";
+    cout << "Enter Phone (e.g., (123) 456-7890): ";
     getline(cin, phone);
     
-    cout << "Enter Gender: ";
+    cout << "Enter Gender (Male/Female/Other): ";
     getline(cin, gender);
     
-    cout << "Enter Department: ";
-    getline(cin, dept);
+    cout << "Select Department:\n";
+    cout << "1. Human Resources (HR)\n";
+    cout << "2. Information Technology (IT)\n";
+    cout << "3. Finance\n";
+    cout << "4. Marketing\n";
+    cout << "5. Operations\n";
+    cout << "6. Sales\n";
+    cout << "7. Design\n";
+    cout << "8. Engineering\n";
+    cout << "Enter choice (1-8): ";
+    int deptChoice;
+    cin >> deptChoice;
+    cin.ignore();
+    
+    // Map department choice to department name
+    switch(deptChoice) {
+        case 1: dept = "HR"; break;
+        case 2: dept = "IT"; break;
+        case 3: dept = "Finance"; break;
+        case 4: dept = "Marketing"; break;
+        case 5: dept = "Operations"; break;
+        case 6: dept = "Sales"; break;
+        case 7: dept = "Design"; break;
+        case 8: dept = "Engineering"; break;
+        default: dept = "General"; break;
+    }
     
     shared_ptr<Employee> newEmp;
     
     switch(empType) {
-        case 1: { // Full-Time
-            double salary, bonus;
-            int vacation;
-            cout << "Enter Base Salary: ";
-            cin >> salary;
-            cout << "Enter Annual Bonus: ";
-            cin >> bonus;
-            cout << "Enter Vacation Days: ";
-            cin >> vacation;
-            cin.ignore();
-            
+        case 1:
             newEmp = make_shared<FullTimeEmployee>(id, fname, lname, email, 
-                                                    phone, gender, dept, 
-                                                    salary, bonus, vacation);
+                                                   phone, gender, dept);
             break;
-        }
-        case 2: { // Part-Time
-            double hourlyRate;
-            int hours;
-            cout << "Enter Hourly Rate: ";
-            cin >> hourlyRate;
-            cout << "Enter Hours Per Week: ";
-            cin >> hours;
-            cin.ignore();
-            
-            newEmp = make_shared<PartTimeEmployee>(id, fname, lname, email,
-                                                    phone, gender, dept,
-                                                    hourlyRate, hours);
+        case 2:
+            newEmp = make_shared<PartTimeEmployee>(id, fname, lname, email, 
+                                                   phone, gender, dept);
             break;
-        }
-        case 3: { // Intern
-            string university, major;
-            int duration;
-            cout << "Enter University: ";
-            getline(cin, university);
-            cout << "Enter Major: ";
-            getline(cin, major);
-            cout << "Enter Internship Duration (months): ";
-            cin >> duration;
-            cin.ignore();
-            
-            newEmp = make_shared<Intern>(id, fname, lname, email,
-                                         phone, gender, dept,
-                                         university, major, duration);
+        case 3:
+            newEmp = make_shared<InternEmployee>(id, fname, lname, email, 
+                                                 phone, gender, dept);
             break;
-        }
         default:
             cout << "Invalid employee type!\n";
             return;
@@ -214,9 +186,7 @@ void addEmployee(vector<shared_ptr<Employee>>& employees) {
     cout << "Total employees: " << employees.size() << endl;
 }
 
-// Display all employees in a formatted table
 void displayAllEmployees(const vector<shared_ptr<Employee>>& employees) {
-    cout << fixed << setprecision(2);
     cout << "\n=== ALL EMPLOYEES ===\n";
     cout << "Total Employees: " << employees.size() << endl;
     
@@ -225,38 +195,24 @@ void displayAllEmployees(const vector<shared_ptr<Employee>>& employees) {
         return;
     }
     
-    // Table header
-    cout << "\n" << string(100, '-') << endl;
+    cout << "\n" << string(80, '-') << endl;
     cout << left << setw(10) << "ID"
          << setw(20) << "Name"
          << setw(15) << "Type"
          << setw(15) << "Department"
-         << setw(15) << "Salary/Month"
-         << setw(25) << "Details" << endl;
-    cout << string(100, '-') << endl;
+         << setw(20) << "Email" << endl;
+    cout << string(80, '-') << endl;
     
-    // Table rows
-    for (size_t i = 0; i < employees.size(); i++) {
-        cout << left << setw(10) << employees[i]->getEmployeeId()
-             << setw(20) << employees[i]->getFullName()
-             << setw(15) << employees[i]->getEmployeeType()
-             << setw(15) << employees[i]->getDepartment()
-             << setw(15) << employees[i]->calculateSalary();
-        
-        // Display specific details based on type
-        if (auto fullTime = dynamic_pointer_cast<FullTimeEmployee>(employees[i])) {
-            cout << "Bonus: $" << fullTime->getAnnualBonus();
-        } else if (auto partTime = dynamic_pointer_cast<PartTimeEmployee>(employees[i])) {
-            cout << "Rate: $" << partTime->getHourlyRate() << "/hr";
-        } else if (auto intern = dynamic_pointer_cast<Intern>(employees[i])) {
-            cout << "Intern, " << intern->getUniversity();
-        }
-        cout << endl;
+    for (const auto& emp : employees) {
+        cout << left << setw(10) << emp->getEmployeeId()
+             << setw(20) << emp->getFullName()
+             << setw(15) << emp->getEmployeeType()
+             << setw(15) << emp->getDepartment()
+             << setw(20) << emp->getEmail() << endl;
     }
-    cout << string(100, '-') << endl;
+    cout << string(80, '-') << endl;
 }
 
-// Search for an employee with advanced options
 void searchEmployee(const vector<shared_ptr<Employee>>& employees) {
     int searchOption;
     string searchTerm;
@@ -280,22 +236,22 @@ void searchEmployee(const vector<shared_ptr<Employee>>& employees) {
         bool match = false;
         
         switch(searchOption) {
-            case 1: // Search by ID
+            case 1:
                 match = (emp->getEmployeeId() == searchTerm);
                 break;
-            case 2: // Search by Name
+            case 2:
                 match = (emp->getFullName().find(searchTerm) != string::npos);
                 break;
-            case 3: // Search by Department
+            case 3:
                 match = (emp->getDepartment().find(searchTerm) != string::npos);
                 break;
-            case 4: // Search by Type
+            case 4:
                 match = (emp->getEmployeeType().find(searchTerm) != string::npos);
                 break;
         }
         
         if (match) {
-            emp->displayEmployee();
+            emp->displayDetails();
             found = true;
         }
     }
@@ -305,7 +261,6 @@ void searchEmployee(const vector<shared_ptr<Employee>>& employees) {
     }
 }
 
-// Update an employee
 void updateEmployee(vector<shared_ptr<Employee>>& employees) {
     string id;
     bool found = false;
@@ -317,22 +272,39 @@ void updateEmployee(vector<shared_ptr<Employee>>& employees) {
     for (auto& emp : employees) {
         if (emp->getEmployeeId() == id) {
             found = true;
-            emp->displayEmployee();
+            emp->displayDetails();
             
-            // Use dynamic casting to access derived class methods
-            if (auto fullTime = dynamic_pointer_cast<FullTimeEmployee>(emp)) {
-                double newBonus;
-                cout << "Enter new annual bonus: ";
-                cin >> newBonus;
-                fullTime->setAnnualBonus(newBonus);
-            } else if (auto partTime = dynamic_pointer_cast<PartTimeEmployee>(emp)) {
-                double newRate;
-                cout << "Enter new hourly rate: ";
-                cin >> newRate;
-                partTime->setHourlyRate(newRate);
+            int updateChoice;
+            cout << "\nWhat would you like to update?\n";
+            cout << "1. Email\n";
+            cout << "2. Phone\n";
+            cout << "3. Department\n";
+            cout << "Enter choice (1-3): ";
+            cin >> updateChoice;
+            cin.ignore();
+            
+            if (updateChoice == 1) {
+                string newEmail;
+                cout << "Enter new email: ";
+                getline(cin, newEmail);
+                emp->setEmail(newEmail);
+            } else if (updateChoice == 2) {
+                string newPhone;
+                cout << "Enter new phone: ";
+                getline(cin, newPhone);
+                emp->setPhone(newPhone);
+            } else if (updateChoice == 3) {
+                string newDept;
+                cout << "Enter new department: ";
+                getline(cin, newDept);
+                emp->setDepartment(newDept);
+            } else {
+                cout << "Invalid choice!\n";
+                return;
             }
             
             cout << "\nEmployee updated successfully!\n";
+            emp->displayDetails();
             break;
         }
     }
@@ -342,7 +314,6 @@ void updateEmployee(vector<shared_ptr<Employee>>& employees) {
     }
 }
 
-// Delete an employee
 void deleteEmployee(vector<shared_ptr<Employee>>& employees) {
     string id;
     char confirm;
@@ -371,7 +342,6 @@ void deleteEmployee(vector<shared_ptr<Employee>>& employees) {
     cout << "Employee ID not found!\n";
 }
 
-// Sort employees using different criteria
 void sortEmployees(vector<shared_ptr<Employee>>& employees) {
     int sortChoice;
     
@@ -379,10 +349,9 @@ void sortEmployees(vector<shared_ptr<Employee>>& employees) {
     cout << "Sort by:\n";
     cout << "1. Employee ID\n";
     cout << "2. Name (A-Z)\n";
-    cout << "3. Salary (High to Low)\n";
-    cout << "4. Department\n";
-    cout << "5. Employee Type\n";
-    cout << "Enter choice (1-5): ";
+    cout << "3. Department\n";
+    cout << "4. Employee Type\n";
+    cout << "Enter choice (1-4): ";
     cin >> sortChoice;
     cin.ignore();
     
@@ -396,14 +365,10 @@ void sortEmployees(vector<shared_ptr<Employee>>& employees) {
             cout << "Employees sorted by Name!\n";
             break;
         case 3:
-            sort(employees.begin(), employees.end(), compareBySalary);
-            cout << "Employees sorted by Salary!\n";
-            break;
-        case 4:
             sort(employees.begin(), employees.end(), compareByDepartment);
             cout << "Employees sorted by Department!\n";
             break;
-        case 5:
+        case 4:
             sort(employees.begin(), employees.end(), compareByType);
             cout << "Employees sorted by Employee Type!\n";
             break;
@@ -412,11 +377,9 @@ void sortEmployees(vector<shared_ptr<Employee>>& employees) {
             return;
     }
     
-    // Display sorted list
     displayAllEmployees(employees);
 }
 
-// Filter employees based on criteria
 void filterEmployees(const vector<shared_ptr<Employee>>& employees) {
     int filterChoice;
     
@@ -424,148 +387,58 @@ void filterEmployees(const vector<shared_ptr<Employee>>& employees) {
     cout << "Filter by:\n";
     cout << "1. Department\n";
     cout << "2. Employee Type\n";
-    cout << "3. Salary Range\n";
-    cout << "Enter choice (1-3): ";
+    cout << "Enter choice (1-2): ";
     cin >> filterChoice;
     cin.ignore();
     
     vector<shared_ptr<Employee>> filteredList;
     
-    switch(filterChoice) {
-        case 1: { // Filter by Department
-            string dept;
-            cout << "Enter department to filter: ";
-            getline(cin, dept);
-            
-            for (const auto& emp : employees) {
-                if (emp->getDepartment() == dept) {
-                    filteredList.push_back(emp);
-                }
+    if (filterChoice == 1) {
+        string dept;
+        cout << "Enter department to filter (HR/IT/Finance/Marketing/Operations/Sales/Design/Engineering): ";
+        getline(cin, dept);
+        
+        for (const auto& emp : employees) {
+            if (emp->getDepartment() == dept) {
+                filteredList.push_back(emp);
             }
-            cout << "\nFound " << filteredList.size() << " employees in " << dept << " department:\n";
-            break;
         }
-        case 2: { // Filter by Type
-            string type;
-            cout << "Enter employee type to filter (Full-Time/Part-Time/Intern): ";
-            getline(cin, type);
-            
-            for (const auto& emp : employees) {
-                if (emp->getEmployeeType() == type) {
-                    filteredList.push_back(emp);
-                }
+        cout << "\nFound " << filteredList.size() << " employees in " << dept << " department:\n";
+    } else if (filterChoice == 2) {
+        string type;
+        cout << "Enter employee type to filter (full-time/part-time/intern): ";
+        getline(cin, type);
+        
+        for (const auto& emp : employees) {
+            if (emp->getEmployeeType() == type) {
+                filteredList.push_back(emp);
             }
-            cout << "\nFound " << filteredList.size() << " " << type << " employees:\n";
-            break;
         }
-        case 3: { // Filter by Salary Range
-            double minSalary, maxSalary;
-            cout << "Enter minimum salary: ";
-            cin >> minSalary;
-            cout << "Enter maximum salary: ";
-            cin >> maxSalary;
-            cin.ignore();
-            
-            for (const auto& emp : employees) {
-                double salary = emp->calculateSalary();
-                if (salary >= minSalary && salary <= maxSalary) {
-                    filteredList.push_back(emp);
-                }
-            }
-            cout << "\nFound " << filteredList.size() << " employees with salary between $" 
-                 << minSalary << " and $" << maxSalary << ":\n";
-            break;
-        }
-        default:
-            cout << "Invalid choice!\n";
-            return;
+        cout << "\nFound " << filteredList.size() << " " << type << " employees:\n";
+    } else {
+        cout << "Invalid choice!\n";
+        return;
     }
     
     if (filteredList.empty()) {
         cout << "No employees match the filter criteria.\n";
     } else {
-        // Display filtered results
+        cout << "\n" << string(80, '-') << endl;
+        cout << left << setw(10) << "ID"
+             << setw(20) << "Name"
+             << setw(15) << "Type"
+             << setw(15) << "Department"
+             << setw(20) << "Email" << endl;
+        cout << string(80, '-') << endl;
+        
         for (const auto& emp : filteredList) {
             cout << left << setw(10) << emp->getEmployeeId()
                  << setw(20) << emp->getFullName()
                  << setw(15) << emp->getEmployeeType()
                  << setw(15) << emp->getDepartment()
-                 << "$" << emp->calculateSalary() << endl;
+                 << setw(20) << emp->getEmail() << endl;
         }
-    }
-}
-
-// Generate a comprehensive report
-void generateReport(const vector<shared_ptr<Employee>>& employees) {
-    cout << fixed << setprecision(2);
-    cout << "\n=== EMPLOYEE MANAGEMENT SYSTEM REPORT ===\n";
-    cout << "Generated on: [Current Date/Time]\n\n";
-    
-    if (employees.empty()) {
-        cout << "No employees in the system.\n";
-        return;
-    }
-    
-    // Summary Statistics
-    int fullTimeCount = 0, partTimeCount = 0, internCount = 0;
-    double totalSalary = 0, highestSalary = 0, lowestSalary = 1e9;
-    shared_ptr<Employee> highestPaid, lowestPaid;
-    
-    for (const auto& emp : employees) {
-        double salary = emp->calculateSalary();
-        totalSalary += salary;
-        
-        if (salary > highestSalary) {
-            highestSalary = salary;
-            highestPaid = emp;
-        }
-        if (salary < lowestSalary) {
-            lowestSalary = salary;
-            lowestPaid = emp;
-        }
-        
-        // Count by type
-        if (emp->getEmployeeType() == "Full-Time") fullTimeCount++;
-        else if (emp->getEmployeeType() == "Part-Time") partTimeCount++;
-        else if (emp->getEmployeeType() == "Intern") internCount++;
-    }
-    
-    double avgSalary = employees.empty() ? 0 : totalSalary / employees.size();
-    
-    cout << "SUMMARY STATISTICS:\n";
-    cout << string(40, '-') << endl;
-    cout << "Total Employees:      " << employees.size() << endl;
-    cout << "Full-Time Employees:  " << fullTimeCount << endl;
-    cout << "Part-Time Employees:  " << partTimeCount << endl;
-    cout << "Interns:              " << internCount << endl;
-    cout << "Total Monthly Salary: $" << totalSalary << endl;
-    cout << "Average Salary:       $" << avgSalary << endl;
-    cout << "Highest Salary:       $" << highestSalary 
-         << " (" << highestPaid->getFullName() << ")" << endl;
-    cout << "Lowest Salary:        $" << lowestSalary 
-         << " (" << lowestPaid->getFullName() << ")" << endl;
-    
-    // Department Breakdown
-    cout << "\nDEPARTMENT BREAKDOWN:\n";
-    cout << string(40, '-') << endl;
-    
-    // Count employees by department
-    for (const auto& emp : employees) {
-        bool deptFound = false;
-        // You could use a map here for better efficiency
-        // For simplicity, we'll just list them
-        cout << emp->getDepartment() << ": " << emp->getFullName() 
-             << " (" << emp->getEmployeeType() << ")" << endl;
-    }
-    
-    // Recent Additions (last 5)
-    cout << "\nRECENT EMPLOYEE ADDITIONS:\n";
-    cout << string(40, '-') << endl;
-    int count = min(5, (int)employees.size());
-    for (int i = 0; i < count; i++) {
-        cout << employees[i]->getEmployeeId() << " - " 
-             << employees[i]->getFullName() << " - " 
-             << employees[i]->getEmployeeType() << endl;
+        cout << string(80, '-') << endl;
     }
 }
 
@@ -576,10 +449,6 @@ bool compareById(const shared_ptr<Employee>& a, const shared_ptr<Employee>& b) {
 
 bool compareByName(const shared_ptr<Employee>& a, const shared_ptr<Employee>& b) {
     return a->getFullName() < b->getFullName();
-}
-
-bool compareBySalary(const shared_ptr<Employee>& a, const shared_ptr<Employee>& b) {
-    return a->calculateSalary() > b->calculateSalary(); // Descending order
 }
 
 bool compareByDepartment(const shared_ptr<Employee>& a, const shared_ptr<Employee>& b) {

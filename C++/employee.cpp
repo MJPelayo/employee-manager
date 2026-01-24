@@ -7,23 +7,20 @@ using namespace std;
 
 // ==================== BASE EMPLOYEE CLASS ====================
 
-// Default constructor
 Employee::Employee() {
-    employeeId = "EMP000";
-    firstName = "Unknown";
-    lastName = "Unknown";
-    email = "unknown@company.com";
-    phone = "000-000-0000";
-    gender = "Unknown";
-    department = "General";
-    employeeType = "Employee";
-    baseSalary = 30000.0;
+    employeeId = "EMP001";
+    firstName = "John";
+    lastName = "Doe";
+    email = "john.doe@company.com";
+    phone = "(123) 456-7890";
+    gender = "Male";
+    department = "IT";
+    employeeType = "full-time";
 }
 
-// Parameterized constructor
 Employee::Employee(string id, string fname, string lname, 
                    string email, string phone, string gender,
-                   string dept, string type, double baseSalary) {
+                   string dept, string type) {
     setEmployeeId(id);
     setFirstName(fname);
     setLastName(lname);
@@ -32,7 +29,6 @@ Employee::Employee(string id, string fname, string lname,
     setGender(gender);
     setDepartment(dept);
     setEmployeeType(type);
-    setBaseSalary(baseSalary);
 }
 
 // Setter functions
@@ -55,7 +51,7 @@ void Employee::setLastName(string lname) {
 }
 
 void Employee::setEmail(string email) {
-    if (!email.empty() && email.find('@') != string::npos) {
+    if (!email.empty()) {
         this->email = email;
     }
 }
@@ -81,12 +77,6 @@ void Employee::setDepartment(string dept) {
 void Employee::setEmployeeType(string type) {
     if (!type.empty()) {
         employeeType = type;
-    }
-}
-
-void Employee::setBaseSalary(double salary) {
-    if (salary > 0) {
-        baseSalary = salary;
     }
 }
 
@@ -123,209 +113,99 @@ string Employee::getEmployeeType() const {
     return employeeType;
 }
 
-double Employee::getBaseSalary() const {
-    return baseSalary;
-}
-
-// Display function
-void Employee::displayEmployee() const {
-    cout << fixed << setprecision(2);
-    cout << "\n====== EMPLOYEE DETAILS ======\n";
-    cout << "Employee ID:    " << employeeId << endl;
-    cout << "Name:           " << firstName << " " << lastName << endl;
-    cout << "Email:          " << email << endl;
-    cout << "Phone:          " << phone << endl;
-    cout << "Gender:         " << gender << endl;
-    cout << "Department:     " << department << endl;
-    cout << "Employee Type:  " << employeeType << endl;
-    cout << "Base Salary:    $" << baseSalary << endl;
-    cout << "Calculated Salary: $" << calculateSalary() << endl;
-    cout << "================================\n";
-}
-
 // Get full name
 string Employee::getFullName() const {
     return firstName + " " + lastName;
 }
 
-// For sorting purposes
-string Employee::getDetailsForSorting() const {
-    return employeeId + "|" + getFullName() + "|" + department + "|" + employeeType;
+// For sorting
+string Employee::getSortingKey() const {
+    return employeeId;
 }
 
 // ==================== FULL-TIME EMPLOYEE ====================
 
-FullTimeEmployee::FullTimeEmployee() : Employee() {
-    annualBonus = 5000.0;
-    vacationDays = 20;
-    setEmployeeType("Full-Time");
+FullTimeEmployee::FullTimeEmployee() 
+    : Employee("EMP001", "John", "Doe", "john@company.com", 
+               "(123) 456-7890", "Male", "IT", "full-time") {
 }
 
 FullTimeEmployee::FullTimeEmployee(string id, string fname, string lname,
                                    string email, string phone, string gender,
-                                   string dept, double baseSalary,
-                                   double bonus, int vacation) 
-    : Employee(id, fname, lname, email, phone, gender, dept, "Full-Time", baseSalary) {
-    setAnnualBonus(bonus);
-    setVacationDays(vacation);
+                                   string dept) 
+    : Employee(id, fname, lname, email, phone, gender, dept, "full-time") {
 }
 
-double FullTimeEmployee::calculateSalary() const {
-    return getBaseSalary() + annualBonus;  // Annual salary with bonus
+void FullTimeEmployee::displayDetails() const {
+    cout << "\n===== FULL-TIME EMPLOYEE =====\n";
+    cout << "Employee ID:    " << getEmployeeId() << endl;
+    cout << "Name:           " << getFullName() << endl;
+    cout << "Email:          " << getEmail() << endl;
+    cout << "Phone:          " << getPhone() << endl;
+    cout << "Gender:         " << getGender() << endl;
+    cout << "Department:     " << getDepartment() << endl;
+    cout << "Employee Type:  " << getEmployeeType() << endl;
+    cout << "===============================\n";
 }
 
-void FullTimeEmployee::displayEmployee() const {
-    Employee::displayEmployee();  // Call base class display
-    cout << "Annual Bonus:   $" << annualBonus << endl;
-    cout << "Vacation Days:  " << vacationDays << " days" << endl;
-    cout << "Total Salary:   $" << calculateSalary() << " per year" << endl;
-    cout << "================================\n";
-}
-
-void FullTimeEmployee::setAnnualBonus(double bonus) {
-    if (bonus >= 0) {
-        annualBonus = bonus;
-    }
-}
-
-void FullTimeEmployee::setVacationDays(int days) {
-    if (days >= 0) {
-        vacationDays = days;
-    }
-}
-
-double FullTimeEmployee::getAnnualBonus() const {
-    return annualBonus;
-}
-
-int FullTimeEmployee::getVacationDays() const {
-    return vacationDays;
-}
-
-string FullTimeEmployee::getDetailsForSorting() const {
-    return Employee::getDetailsForSorting() + "|FT|" + to_string((int)calculateSalary());
+string FullTimeEmployee::getSortingKey() const {
+    return "FT_" + getEmployeeId();
 }
 
 // ==================== PART-TIME EMPLOYEE ====================
 
-PartTimeEmployee::PartTimeEmployee() : Employee() {
-    hoursPerWeek = 20;
-    hourlyRate = 25.0;
-    setEmployeeType("Part-Time");
-    setBaseSalary(0);  // Part-time uses hourly rate
+PartTimeEmployee::PartTimeEmployee() 
+    : Employee("EMP002", "Jane", "Smith", "jane@company.com", 
+               "(234) 567-8901", "Female", "HR", "part-time") {
 }
 
 PartTimeEmployee::PartTimeEmployee(string id, string fname, string lname,
                                    string email, string phone, string gender,
-                                   string dept, double hourlyRate,
-                                   int hours) 
-    : Employee(id, fname, lname, email, phone, gender, dept, "Part-Time", 0) {
-    setHourlyRate(hourlyRate);
-    setHoursPerWeek(hours);
+                                   string dept) 
+    : Employee(id, fname, lname, email, phone, gender, dept, "part-time") {
 }
 
-double PartTimeEmployee::calculateSalary() const {
-    // Calculate monthly salary: hours/week * 4 weeks * hourly rate
-    return hoursPerWeek * 4 * hourlyRate;
+void PartTimeEmployee::displayDetails() const {
+    cout << "\n===== PART-TIME EMPLOYEE =====\n";
+    cout << "Employee ID:    " << getEmployeeId() << endl;
+    cout << "Name:           " << getFullName() << endl;
+    cout << "Email:          " << getEmail() << endl;
+    cout << "Phone:          " << getPhone() << endl;
+    cout << "Gender:         " << getGender() << endl;
+    cout << "Department:     " << getDepartment() << endl;
+    cout << "Employee Type:  " << getEmployeeType() << endl;
+    cout << "===============================\n";
 }
 
-void PartTimeEmployee::displayEmployee() const {
-    Employee::displayEmployee();
-    cout << "Hourly Rate:    $" << hourlyRate << endl;
-    cout << "Hours/Week:     " << hoursPerWeek << endl;
-    cout << "Monthly Salary: $" << calculateSalary() << endl;
-    cout << "Yearly Salary:  $" << calculateSalary() * 12 << endl;
-    cout << "================================\n";
+string PartTimeEmployee::getSortingKey() const {
+    return "PT_" + getEmployeeId();
 }
 
-void PartTimeEmployee::setHoursPerWeek(int hours) {
-    if (hours > 0 && hours <= 40) {
-        hoursPerWeek = hours;
-    }
+// ==================== INTERN EMPLOYEE ====================
+
+InternEmployee::InternEmployee() 
+    : Employee("EMP003", "Bob", "Johnson", "bob@company.com", 
+               "(345) 678-9012", "Male", "IT", "intern") {
 }
 
-void PartTimeEmployee::setHourlyRate(double rate) {
-    if (rate > 0) {
-        hourlyRate = rate;
-    }
+InternEmployee::InternEmployee(string id, string fname, string lname,
+                               string email, string phone, string gender,
+                               string dept) 
+    : Employee(id, fname, lname, email, phone, gender, dept, "intern") {
 }
 
-int PartTimeEmployee::getHoursPerWeek() const {
-    return hoursPerWeek;
+void InternEmployee::displayDetails() const {
+    cout << "\n===== INTERN EMPLOYEE =====\n";
+    cout << "Employee ID:    " << getEmployeeId() << endl;
+    cout << "Name:           " << getFullName() << endl;
+    cout << "Email:          " << getEmail() << endl;
+    cout << "Phone:          " << getPhone() << endl;
+    cout << "Gender:         " << getGender() << endl;
+    cout << "Department:     " << getDepartment() << endl;
+    cout << "Employee Type:  " << getEmployeeType() << endl;
+    cout << "============================\n";
 }
 
-double PartTimeEmployee::getHourlyRate() const {
-    return hourlyRate;
-}
-
-string PartTimeEmployee::getDetailsForSorting() const {
-    return Employee::getDetailsForSorting() + "|PT|" + to_string((int)calculateSalary());
-}
-
-// ==================== INTERN ====================
-
-Intern::Intern() : Employee() {
-    university = "Unknown University";
-    major = "Computer Science";
-    internshipDuration = 6;
-    setEmployeeType("Intern");
-    setBaseSalary(0);
-}
-
-Intern::Intern(string id, string fname, string lname,
-               string email, string phone, string gender,
-               string dept, string university,
-               string major, int duration) 
-    : Employee(id, fname, lname, email, phone, gender, dept, "Intern", 0) {
-    setUniversity(university);
-    setMajor(major);
-    setInternshipDuration(duration);
-}
-
-double Intern::calculateSalary() const {
-    // Interns get a monthly stipend
-    return 1500.0;  // Fixed monthly stipend
-}
-
-void Intern::displayEmployee() const {
-    Employee::displayEmployee();
-    cout << "University:     " << university << endl;
-    cout << "Major:          " << major << endl;
-    cout << "Duration:       " << internshipDuration << " months" << endl;
-    cout << "Monthly Stipend:$" << calculateSalary() << endl;
-    cout << "================================\n";
-}
-
-void Intern::setUniversity(string uni) {
-    if (!uni.empty()) {
-        university = uni;
-    }
-}
-
-void Intern::setMajor(string major) {
-    if (!major.empty()) {
-        this->major = major;
-    }
-}
-
-void Intern::setInternshipDuration(int duration) {
-    if (duration > 0) {
-        internshipDuration = duration;
-    }
-}
-
-string Intern::getUniversity() const {
-    return university;
-}
-
-string Intern::getMajor() const {
-    return major;
-}
-
-int Intern::getInternshipDuration() const {
-    return internshipDuration;
-}
-
-string Intern::getDetailsForSorting() const {
-    return Employee::getDetailsForSorting() + "|IN|" + to_string((int)calculateSalary());
+string InternEmployee::getSortingKey() const {
+    return "IN_" + getEmployeeId();
 }
