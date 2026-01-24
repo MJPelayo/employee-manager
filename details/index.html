@@ -1,41 +1,194 @@
+<!-- [file name]: index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Employee Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee System | Employee Details</title>
     <link rel="stylesheet" href="details.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h2>Employee Details</h2>
-        
-        <div class="details-card">
-            <div class="detail-item">
-                <span class="label">Employee ID:</span>
-                <span id="employeeId" class="value"></span>
-            </div>
-            <div class="detail-item">
-                <span class="label">First Name:</span>
-                <span id="firstName" class="value"></span>
-            </div>
-            <div class="detail-item">
-                <span class="label">Last Name:</span>
-                <span id="lastName" class="value"></span>
-            </div>
-            <div class="detail-item">
-                <span class="label">Department:</span>
-                <span id="department" class="value"></span>
-            </div>
-            <div class="detail-item">
-                <span class="label">Full Name:</span>
-                <span id="fullName" class="value"></span>
-            </div>
+        <!-- Header -->
+        <div class="header">
+            <h2 id="pageTitle">
+                <i class="fas fa-user-circle"></i>
+                Employee Details
+            </h2>
+            <p id="pageSubtitle">View complete employee information</p>
         </div>
         
-        <div class="button-group">
-            <button id="editBtn" class="btn btn-primary">Edit Employee</button>
-            <button id="deleteBtn" class="btn btn-danger">Delete Employee</button>
-            <button id="backBtn" class="btn btn-secondary">Back to List</button>
+        <!-- Content -->
+        <div class="content">
+            <!-- Left Column: Profile & Quick Info -->
+            <div class="left-column">
+                <!-- Profile Section -->
+                <div class="profile-section">
+                    <h3><i class="fas fa-user"></i> Profile</h3>
+                    
+                    <div class="profile-picture" id="profilePicture">
+                        <div class="profile-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <img src="" alt="Profile Picture" class="profile-image" id="profileImage">
+                    </div>
+                    
+                    <div class="profile-info">
+                        <div id="employeeName">Employee Name</div>
+                        <div id="employeeIdDisplay">ID: EMP001</div>
+                        <small>Profile picture</small>
+                    </div>
+                </div>
+                
+                <!-- Quick Info -->
+                <div class="quick-info">
+                    <h3><i class="fas fa-info-circle"></i> Quick Info</h3>
+                    
+                    <div class="info-item">
+                        <label><i class="fas fa-hashtag"></i> Employee ID</label>
+                        <div class="value" id="employeeIdValue">EMP001</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <label><i class="fas fa-tag"></i> Employee Type</label>
+                        <div class="value">
+                            <span class="detail-badge" id="employeeTypeBadge">Full-time</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <label><i class="fas fa-building"></i> Department</label>
+                        <div class="value">
+                            <span class="detail-badge badge-department" id="departmentBadge">HR</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <label><i class="fas fa-calendar-alt"></i> Join Date</label>
+                        <div class="value" id="joinDate">01/01/2023</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Details -->
+            <div class="right-column">
+                <h3><i class="fas fa-id-card"></i> Employee Information</h3>
+                
+                <div class="details-grid">
+                    <!-- Personal Information -->
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <i class="fas fa-user"></i>
+                            <h4>Personal Information</h4>
+                        </div>
+                        <div class="detail-content">
+                            <div class="detail-row">
+                                <span class="detail-label"><i class="fas fa-user"></i> Full Name</span>
+                                <span class="detail-value" id="fullName">John Doe</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label"><i class="fas fa-venus-mars"></i> Gender</span>
+                                <span class="detail-value" id="gender">Male</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Information -->
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <i class="fas fa-address-book"></i>
+                            <h4>Contact Information</h4>
+                        </div>
+                        <div class="detail-content">
+                            <div class="detail-row">
+                                <span class="detail-label"><i class="fas fa-envelope"></i> Email</span>
+                                <span class="detail-value" id="email">john.doe@company.com</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label"><i class="fas fa-phone"></i> Phone</span>
+                                <span class="detail-value" id="phone">(123) 456-7890</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Employment Details -->
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <i class="fas fa-briefcase"></i>
+                            <h4>Employment Details</h4>
+                        </div>
+                        <div class="detail-content">
+                            <div class="detail-row">
+                                <span class="detail-label"><i class="fas fa-id-badge"></i> Employee Type</span>
+                                <span class="detail-value">
+                                    <span class="detail-badge" id="employmentType">Full-time</span>
+                                </span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label"><i class="fas fa-building"></i> Department</span>
+                                <span class="detail-value">
+                                    <span class="detail-badge badge-department" id="employmentDept">Human Resources</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- System Information -->
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <i class="fas fa-database"></i>
+                            <h4>System Information</h4>
+                        </div>
+                        <div class="detail-content">
+                            <div class="detail-row">
+                                <span class="detail-label"><i class="fas fa-key"></i> Employee ID</span>
+                                <span class="detail-value" id="systemEmployeeId">EMP001</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label"><i class="fas fa-user-tag"></i> User Type</span>
+                                <span class="detail-value">Employee</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline -->
+                <div class="timeline-section">
+                    <h4><i class="fas fa-history"></i> Timeline</h4>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-label">Employee Created</div>
+                            <div class="timeline-value" id="createdAt">January 1, 2023</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-label">Last Updated</div>
+                            <div class="timeline-value" id="updatedAt">January 15, 2023</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <button id="editBtn" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> Edit Employee
+                    </button>
+                    <button id="deleteBtn" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete Employee
+                    </button>
+                    <button id="backToListBtn" class="btn btn-secondary">
+                        <i class="fas fa-list"></i> Back to List
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
