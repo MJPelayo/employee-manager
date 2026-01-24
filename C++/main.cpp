@@ -28,24 +28,29 @@ int main() {
     vector<shared_ptr<Employee>> employees;
     int choice;
     
+    // Reset counter at start
+    Employee::resetCounter();
+    
     cout << "================================\n";
     cout << "   EMPLOYEE MANAGEMENT SYSTEM   \n";
     cout << "================================\n";
     
     // Create sample employees matching your form
-    employees.push_back(make_shared<FullTimeEmployee>("EMP001", "John", "Doe", 
+    // IDs will be auto-generated: EMP001, EMP002, etc.
+    employees.push_back(make_shared<FullTimeEmployee>("John", "Doe", 
                                                       "john@employee.com", "(123) 456-7890", 
                                                       "Male", "IT"));
     
-    employees.push_back(make_shared<PartTimeEmployee>("EMP002", "Jane", "Smith", 
+    employees.push_back(make_shared<PartTimeEmployee>("Jane", "Smith", 
                                                       "jane@employee.com", "(234) 567-8901", 
                                                       "Female", "HR"));
     
-    employees.push_back(make_shared<InternEmployee>("EMP003", "Bob", "Johnson", 
+    employees.push_back(make_shared<InternEmployee>("Bob", "Johnson", 
                                                     "bob@employee.com", "(345) 678-9012", 
                                                     "Male", "IT"));
     
     cout << "Sample employees added to system.\n";
+    cout << "Auto-generated IDs: EMP001, EMP002, EMP003\n";
     
     do {
         displayMenu();
@@ -92,7 +97,7 @@ int main() {
 
 void displayMenu() {
     cout << "\n============== MAIN MENU ==============\n";
-    cout << "1. Add New Employee\n";
+    cout << "1. Add New Employee (ID Auto-generated)\n";
     cout << "2. Display All Employees\n";
     cout << "3. Search Employee\n";
     cout << "4. Update Employee\n";
@@ -105,9 +110,11 @@ void displayMenu() {
 
 void addEmployee(vector<shared_ptr<Employee>>& employees) {
     int empType;
-    string id, fname, lname, email, phone, gender, dept;
+    string fname, lname, email, phone, gender, dept;
     
     cout << "\n=== ADD NEW EMPLOYEE ===\n";
+    cout << "Employee ID will be auto-generated\n\n";
+    
     cout << "Select Employee Type:\n";
     cout << "1. Full-Time Employee\n";
     cout << "2. Part-Time Employee\n";
@@ -115,9 +122,6 @@ void addEmployee(vector<shared_ptr<Employee>>& employees) {
     cout << "Enter choice (1-3): ";
     cin >> empType;
     cin.ignore();
-    
-    cout << "Enter Employee ID (e.g., EMP001): ";
-    getline(cin, id);
     
     cout << "Enter First Name: ";
     getline(cin, fname);
@@ -165,15 +169,15 @@ void addEmployee(vector<shared_ptr<Employee>>& employees) {
     
     switch(empType) {
         case 1:
-            newEmp = make_shared<FullTimeEmployee>(id, fname, lname, email, 
+            newEmp = make_shared<FullTimeEmployee>(fname, lname, email, 
                                                    phone, gender, dept);
             break;
         case 2:
-            newEmp = make_shared<PartTimeEmployee>(id, fname, lname, email, 
+            newEmp = make_shared<PartTimeEmployee>(fname, lname, email, 
                                                    phone, gender, dept);
             break;
         case 3:
-            newEmp = make_shared<InternEmployee>(id, fname, lname, email, 
+            newEmp = make_shared<InternEmployee>(fname, lname, email, 
                                                  phone, gender, dept);
             break;
         default:
@@ -183,6 +187,7 @@ void addEmployee(vector<shared_ptr<Employee>>& employees) {
     
     employees.push_back(newEmp);
     cout << "\nEmployee added successfully!\n";
+    cout << "Auto-generated ID: " << newEmp->getEmployeeId() << endl;
     cout << "Total employees: " << employees.size() << endl;
 }
 
@@ -324,7 +329,8 @@ void deleteEmployee(vector<shared_ptr<Employee>>& employees) {
     
     for (auto it = employees.begin(); it != employees.end(); ++it) {
         if ((*it)->getEmployeeId() == id) {
-            cout << "\nEmployee found: " << (*it)->getFullName() << endl;
+            cout << "\nEmployee found: " << (*it)->getFullName() 
+                 << " (ID: " << (*it)->getEmployeeId() << ")" << endl;
             cout << "Are you sure you want to delete? (y/n): ";
             cin >> confirm;
             cin.ignore();

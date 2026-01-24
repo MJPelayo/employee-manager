@@ -2,13 +2,17 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <sstream>
 
 using namespace std;
+
+// Initialize static counter
+int Employee::employeeCounter = 0;
 
 // ==================== BASE EMPLOYEE CLASS ====================
 
 Employee::Employee() {
-    employeeId = "EMP001";
+    employeeId = generateEmployeeId();
     firstName = "John";
     lastName = "Doe";
     email = "john.doe@company.com";
@@ -18,10 +22,10 @@ Employee::Employee() {
     employeeType = "full-time";
 }
 
-Employee::Employee(string id, string fname, string lname, 
+Employee::Employee(string fname, string lname, 
                    string email, string phone, string gender,
                    string dept, string type) {
-    setEmployeeId(id);
+    employeeId = generateEmployeeId();
     setFirstName(fname);
     setLastName(lname);
     setEmail(email);
@@ -29,6 +33,14 @@ Employee::Employee(string id, string fname, string lname,
     setGender(gender);
     setDepartment(dept);
     setEmployeeType(type);
+}
+
+// Generate auto employee ID: EMP001, EMP002, etc.
+string Employee::generateEmployeeId() {
+    employeeCounter++;
+    ostringstream oss;
+    oss << "EMP" << setw(3) << setfill('0') << employeeCounter;
+    return oss.str();
 }
 
 // Setter functions
@@ -126,14 +138,14 @@ string Employee::getSortingKey() const {
 // ==================== FULL-TIME EMPLOYEE ====================
 
 FullTimeEmployee::FullTimeEmployee() 
-    : Employee("EMP001", "John", "Doe", "john@company.com", 
+    : Employee("John", "Doe", "john@company.com", 
                "(123) 456-7890", "Male", "IT", "full-time") {
 }
 
-FullTimeEmployee::FullTimeEmployee(string id, string fname, string lname,
+FullTimeEmployee::FullTimeEmployee(string fname, string lname,
                                    string email, string phone, string gender,
                                    string dept) 
-    : Employee(id, fname, lname, email, phone, gender, dept, "full-time") {
+    : Employee(fname, lname, email, phone, gender, dept, "full-time") {
 }
 
 void FullTimeEmployee::displayDetails() const {
@@ -155,14 +167,14 @@ string FullTimeEmployee::getSortingKey() const {
 // ==================== PART-TIME EMPLOYEE ====================
 
 PartTimeEmployee::PartTimeEmployee() 
-    : Employee("EMP002", "Jane", "Smith", "jane@company.com", 
+    : Employee("Jane", "Smith", "jane@company.com", 
                "(234) 567-8901", "Female", "HR", "part-time") {
 }
 
-PartTimeEmployee::PartTimeEmployee(string id, string fname, string lname,
+PartTimeEmployee::PartTimeEmployee(string fname, string lname,
                                    string email, string phone, string gender,
                                    string dept) 
-    : Employee(id, fname, lname, email, phone, gender, dept, "part-time") {
+    : Employee(fname, lname, email, phone, gender, dept, "part-time") {
 }
 
 void PartTimeEmployee::displayDetails() const {
@@ -184,14 +196,14 @@ string PartTimeEmployee::getSortingKey() const {
 // ==================== INTERN EMPLOYEE ====================
 
 InternEmployee::InternEmployee() 
-    : Employee("EMP003", "Bob", "Johnson", "bob@company.com", 
+    : Employee("Bob", "Johnson", "bob@company.com", 
                "(345) 678-9012", "Male", "IT", "intern") {
 }
 
-InternEmployee::InternEmployee(string id, string fname, string lname,
+InternEmployee::InternEmployee(string fname, string lname,
                                string email, string phone, string gender,
                                string dept) 
-    : Employee(id, fname, lname, email, phone, gender, dept, "intern") {
+    : Employee(fname, lname, email, phone, gender, dept, "intern") {
 }
 
 void InternEmployee::displayDetails() const {

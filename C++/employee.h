@@ -16,10 +16,13 @@ protected:
     std::string department;
     std::string employeeType; // "full-time", "part-time", "intern"
     
+    // Static counter for auto-generating IDs
+    static int employeeCounter;
+    
 public:
     // Constructors
     Employee();
-    Employee(std::string id, std::string fname, std::string lname, 
+    Employee(std::string fname, std::string lname, 
              std::string email, std::string phone, std::string gender,
              std::string dept, std::string type);
     
@@ -49,6 +52,12 @@ public:
     std::string getDepartment() const;
     std::string getEmployeeType() const;
     
+    // Static method to get next ID
+    static std::string generateEmployeeId();
+    
+    // Static method to reset counter (for testing)
+    static void resetCounter() { employeeCounter = 0; }
+    
     // Utility functions
     std::string getFullName() const;
     
@@ -60,7 +69,7 @@ public:
 class FullTimeEmployee : public Employee {
 public:
     FullTimeEmployee();
-    FullTimeEmployee(std::string id, std::string fname, std::string lname,
+    FullTimeEmployee(std::string fname, std::string lname,
                      std::string email, std::string phone, std::string gender,
                      std::string dept);
     
@@ -71,7 +80,7 @@ public:
 class PartTimeEmployee : public Employee {
 public:
     PartTimeEmployee();
-    PartTimeEmployee(std::string id, std::string fname, std::string lname,
+    PartTimeEmployee(std::string fname, std::string lname,
                      std::string email, std::string phone, std::string gender,
                      std::string dept);
     
@@ -82,7 +91,7 @@ public:
 class InternEmployee : public Employee {
 public:
     InternEmployee();
-    InternEmployee(std::string id, std::string fname, std::string lname,
+    InternEmployee(std::string fname, std::string lname,
                    std::string email, std::string phone, std::string gender,
                    std::string dept);
     
